@@ -15,21 +15,20 @@ var dbEngine = "mongo"
 
 func main() {
 	var userRepo data.UserRepository
-	mongoClient, err := mongo.NewDB()
-	if err != nil {
-		log.Println(err)
-		os.Exit(1)
-	}
-
-	db, err := postgresql.NewDB()
-	if err != nil {
-		log.Println(err)
-		os.Exit(1)
-	}
 
 	if dbEngine == "mongo" {
+		mongoClient, err := mongo.NewDB()
+		if err != nil {
+			log.Println(err)
+			os.Exit(1)
+		}
 		userRepo = users_mongo.New(mongoClient)
 	} else {
+		db, err := postgresql.NewDB()
+		if err != nil {
+			log.Println(err)
+			os.Exit(1)
+		}
 		userRepo = users_postgresql.New(db)
 	}
 
